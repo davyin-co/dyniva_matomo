@@ -4,8 +4,10 @@ namespace Drupal\dyniva_matomo\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
 use Drupal\node\Entity\NodeType;
+use GuzzleHttp\Client;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\matomo_reporting_api\MatomoQueryFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,9 +63,6 @@ class MatomoApiController extends ControllerBase implements ContainerInjectionIn
         $response = $this->getApiOverTime($method, $params);
       } else {
         switch ($method) {
-          case 'Actions.getPageUrls':
-            $response = $this->getPageUrls($method, $params);
-            break;
           default:
             $query = $this->matomoQueryFactory->getQuery($method);
             $query->setParameters($params);
@@ -80,6 +79,7 @@ class MatomoApiController extends ControllerBase implements ContainerInjectionIn
 //         $item->icon = str_replace('plugins/Morpheus/icons/dist', $prefix, $item->logo);
 //       }
 //     }
+//    sleep(60*5);
     return new JsonResponse($response);
   }
 
@@ -217,64 +217,37 @@ class MatomoApiController extends ControllerBase implements ContainerInjectionIn
   }
 
   /**
-   * Return page url with title.
-   * @param $method
-   * @param $params
-   * @return mixed
-   */
-  private function getPageUrls($method, $params) {
-    $query = $this->matomoQueryFactory->getQuery($method);
-    $query->setParameters($params);
-    $response = $query->execute()->getResponse();
-
-    $query = $this->matomoQueryFactory->getQuery("Actions.getPageTitles");
-    $query->setParameters($params);
-    $response2 = $query->execute()->getResponse();
-    foreach ($response as $key => &$item) {
-      if ($label = $response2[$key]->label) {
-        $label = explode('|', $label);
-        if (count($label) > 1) {
-          unset($label[count($label) - 1]);
-        }
-        $item->label = trim(implode('|', $label));
-      }
-    }
-    return $response;
-  }
-
-  /**
    * Return sites views rank.
    * @param $params
    * @return mixed
    */
   public function getViewsRank($params) {
-    $query = $this->matomoQueryFactory->getQuery('Actions.get');
     $all = $params['idSite'] == 'all';
-    $params['idSite'] = 'all';
-    $params['showColumns'] = 'nb_pageviews';
+    $query = $this->matomoQueryFactory->getQuery('MultiSites.getAll');
+    $params['module'] = 'MultiSites';
+    $params['action'] = 'getAllWithGroups';
+    $params['format'] = 'JSON';
     $query->setParameters($params);
-    $response = $query->execute()->getResponse();
-    $data = array_filter(json_decode(json_encode($response), TRUE));
-    arsort($data);
-    if (isset($params['filter_limit']) && is_numeric($params['filter_limit'])) {
-      $data = array_slice($data, 0, $params['filter_limit'], TRUE);
-    }
-    $result = [];
-    foreach ($this->getSites(array_keys($data)) as $key => $site) {
-      if ($all) {
-        $result[][$key] = [
-          'label' => $site,
-          'nb_events' => $data[$key],
-        ];
-      } else {
-        $result[$key] = [
-          'label' => $site,
-          'nb_events' => $data[$key],
-        ];
+    $url = $this->matomoQueryFactory->getQueryFactory()->getHttpClient()->getUrl();
+    $query_params = [];
+    $response = [];
+    foreach ($query->getParameters() as $key => $val) {
+      if ($val) {
+        $query_params[] = $key . '=' . $val;
       }
+    }
+    $url .= '?' . join('&', $query_params);
+    try {
+      $fetched = file_get_contents($url);
+      $content = json_decode($fetched, TRUE);
+      if ($content && is_array($content) && isset($content['sites'])) {
+        $response = $content['sites'];
+      }
+    } catch (\Exception $e) {
 
     }
-    return $this->arrayToObject($result);
+
+    return $all ? [$response] : $response;
   }
 
   /**
@@ -344,18 +317,20 @@ class MatomoApiController extends ControllerBase implements ContainerInjectionIn
    * @return array
    */
   public function getSitesVisits($params) {
-    $response = (object) [];
-
-    $query = $this->matomoQueryFactory->getQuery('VisitsSummary.get');
-    $params['showColumns'] = 'nb_actions,nb_visits';
-    $params['date'] = 'today';
+    $data = [];
+    $all = $params['idSite'] == 'all';
+    $query = $this->matomoQueryFactory->getQuery($all ? 'MultiSites.getAll' : 'MultiSites.getOne');
     $query->setParameters($params);
-    $response->today = $query->execute()->getResponse();
-    $params['date'] = 'yesterday';
-    $query->setParameters($params);
-    $response->yesterday = $query->execute()->getResponse();
-
-    return [$response];
+    $response = $query->execute()->getResponse();
+    $sites = $this->getSites($all ? [] : $params['idSite']);
+    foreach ($response as $site) {
+      if (array_key_exists($site->idsite, $sites)) {
+        $site->label = $sites[$site->idsite]['title'];
+        $site->analytics = Url::fromRoute('dyniva_core.managed_entity.site.analytics_page', ['managed_entity_id' => $sites[$site->idsite]['nid']])->toString();
+        $data[] = $site;
+      }
+    }
+    return $all ? [$data] : $data;
   }
 
 
@@ -410,6 +385,7 @@ class MatomoApiController extends ControllerBase implements ContainerInjectionIn
     $query = $this->matomoQueryFactory->getQuery('Events.getAction');
     $query->setParameters($params);
     $response = $query->execute()->getResponse();
+
     $data = (object) [];
     $types = \Drupal::entityTypeManager()
       ->getStorage('node_type')
@@ -422,15 +398,22 @@ class MatomoApiController extends ControllerBase implements ContainerInjectionIn
       $sites = $this->getSites(array_keys($response));
       foreach ($response as $sid => $site) {
         if (array_key_exists($sid, $sites)) {
-          $sid = $sites[$sid];
+          $sid = $sites[$sid]['title'];
         } else {
           continue;
         }
         foreach ($site as $date => $item) {
-          foreach ($item as $key => $val) {
-            $val->Events_EventCategory = isset($type_list[$val->Events_EventCategory]) ? $type_list[$val->Events_EventCategory] : $val->Events_EventCategory;
-            if (empty($params['action_segment']) || ($params['action_segment'] && $params['action_segment'] == $val->Events_EventAction)) {
-              $data->$sid->$date[] = $val;
+          if ($params['period'] == 'range') {
+            $item->Events_EventCategory = isset($type_list[$item->Events_EventCategory]) ? $type_list[$item->Events_EventCategory] : $item->Events_EventCategory;
+            if (empty($params['action_segment']) || ($params['action_segment'] && $params['action_segment'] == $item->Events_EventAction)) {
+              $data->$sid->$date[] = $item;
+            }
+          } else {
+            foreach ($item as $key => $val) {
+              $val->Events_EventCategory = isset($type_list[$val->Events_EventCategory]) ? $type_list[$val->Events_EventCategory] : $val->Events_EventCategory;
+              if (empty($params['action_segment']) || ($params['action_segment'] && $params['action_segment'] == $val->Events_EventAction)) {
+                $data->$sid->$date[] = $val;
+              }
             }
           }
         }
@@ -438,10 +421,17 @@ class MatomoApiController extends ControllerBase implements ContainerInjectionIn
       return [$data];
     } else {
       foreach ($response as $date => &$item) {
-        foreach ($item as $key => $val) {
-          $val->Events_EventCategory = isset($type_list[$val->Events_EventCategory]) ? $type_list[$val->Events_EventCategory] : $val->Events_EventCategory;
-          if (empty($params['action_segment']) || ($params['action_segment'] && $params['action_segment'] == $val->Events_EventAction)) {
-            $data->$date[] = $val;
+        if ($params['period'] == 'range') {
+          $item->Events_EventCategory = isset($type_list[$item->Events_EventCategory]) ? $type_list[$item->Events_EventCategory] : $item->Events_EventCategory;
+          if (empty($params['action_segment']) || ($params['action_segment'] && $params['action_segment'] == $item->Events_EventAction)) {
+            $data->$date[] = $item;
+          }
+        } else {
+          foreach ($item as $key => $val) {
+            $val->Events_EventCategory = isset($type_list[$val->Events_EventCategory]) ? $type_list[$val->Events_EventCategory] : $val->Events_EventCategory;
+            if (empty($params['action_segment']) || ($params['action_segment'] && $params['action_segment'] == $val->Events_EventAction)) {
+              $data->$date[] = $val;
+            }
           }
         }
       }
@@ -464,8 +454,12 @@ class MatomoApiController extends ControllerBase implements ContainerInjectionIn
     }
     $data = [];
     foreach (Node::loadMultiple($query->execute()) as $entity) {
-      $data[$entity->get('matomo_site_id')->value] = $entity->getTitle();
+      $data[$entity->get('matomo_site_id')->value] = [
+        'title' => $entity->getTitle(),
+        'nid' => $entity->id(),
+      ];
     }
     return $data;
   }
+
 }

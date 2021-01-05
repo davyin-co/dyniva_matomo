@@ -26,7 +26,9 @@ class Custom extends MatomoWidgetBase {
       'filter_limit' => 50,
       'table_headers' => '标题,访问量',
       'content' => [],
-      'action_segment' => ''
+      'action_segment' => '',
+      'period' => 'day',
+      'action_segment' => '',
     ];
   }
 
@@ -34,14 +36,14 @@ class Custom extends MatomoWidgetBase {
    * {@inheritDoc}
    */
   public function getContent() {
-    if(!empty($this->configuration['content'])) {
+    if (!empty($this->configuration['content'])) {
       return $this->configuration['content'];
     }
     return [
       '#markup' => '<div class="chart-wrapper"></div>',
       '#attached' => [
-        'library' => ['dyniva_admin/echarts']
-      ]
+        'library' => ['dyniva_admin/echarts'],
+      ],
     ];
   }
 
@@ -60,26 +62,31 @@ class Custom extends MatomoWidgetBase {
   public function getApiCallback() {
     return $this->configuration['api_callback'];
   }
+
   /**
    * {@inheritDoc}
    */
   public function getApiParams() {
-    $params =  [
+    $params = [
       'segment' => $this->configuration['segment'],
       'filter_limit' => $this->configuration['filter_limit'],
       'action_segment' => $this->configuration['action_segment'],
+      'period' => $this->configuration['period'],
+      'action_segment' => $this->configuration['action_segment'],
     ];
-    if(!empty($this->configuration['date'])) {
+    if (!empty($this->configuration['date'])) {
       $params['date'] = $this->configuration['date'];
     }
     return $params;
   }
+
   /**
    * {@inheritDoc}
    */
   public function getApiMethod() {
     return $this->configuration['api_method'];
   }
+
   /**
    *
    * {@inheritDoc}
@@ -88,13 +95,13 @@ class Custom extends MatomoWidgetBase {
   public function blockForm($form, FormStateInterface $form_state) {
     $form = parent::blockForm($form, $form_state);
     $defaults = $this->defaultConfiguration();
-    foreach($defaults as $field => $default) {
-      if($field == 'filter_limit') continue;
-      if($field == 'content') continue;
+    foreach ($defaults as $field => $default) {
+      if ($field == 'filter_limit') continue;
+      if ($field == 'content') continue;
       $form[$field] = array(
         '#title' => $field,
         '#type' => 'textfield',
-        '#default_value' => $this->configuration[$field]
+        '#default_value' => $this->configuration[$field],
       );
     }
     $form['filter_limit'] = array(
@@ -102,10 +109,11 @@ class Custom extends MatomoWidgetBase {
       '#type' => 'number',
       '#max' => 100,
       '#min' => 0,
-      '#default_value' => $this->configuration['filter_limit']
+      '#default_value' => $this->configuration['filter_limit'],
     );
     return $form;
   }
+
   /**
    *
    * {@inheritDoc}
@@ -114,8 +122,8 @@ class Custom extends MatomoWidgetBase {
   public function blockSubmit($form, FormStateInterface $form_state) {
     parent::blockSubmit($form, $form_state);
     $defaults = $this->defaultConfiguration();
-    foreach($defaults as $field => $default) {
-      if($field == 'content') continue;
+    foreach ($defaults as $field => $default) {
+      if ($field == 'content') continue;
       $this->setConfigurationValue($field, $form_state->getValue($field));
     }
   }

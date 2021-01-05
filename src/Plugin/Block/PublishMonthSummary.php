@@ -4,6 +4,7 @@
 namespace Drupal\dyniva_matomo\Plugin\Block;
 
 use Drupal\dyniva_matomo\Form\MonthToolbarForm;
+use Drupal\dyniva_matomo\Form\AnalyticsToolbarForm;
 
 /**
  * 月度发文统计总览
@@ -19,12 +20,23 @@ class PublishMonthSummary extends ToolbarWidgetBase {
    * {@inheritDoc}
    */
   public function getToolbar() {
-    $form = \Drupal::formBuilder()->getForm(MonthToolbarForm::class);
+    try {
+      $entity = $this->getContextValue('entity');
+    } catch (\Exception $e) {
+      $entity = null;
+    }
+    $form = \Drupal::formBuilder()->getForm(AnalyticsToolbarForm::class, $entity);
     $id = $this->getWidgetId();
+    $form['#attributes']['data-id'] = $id;
     $form['#attached']['drupalSettings']['dyniva_matomo']['params'][$id] = [
-      'date' => $form['date']['#default_value']
+      'period' => $form['period']['#default_value'],
     ];
-    unset($form['city']);
+    $form['period']['#title'] = t('Granularity');
+    unset($form['date']);
+    unset($form['date1']);
+    unset($form['date2']);
+    unset($form['segment']);
+    unset($form['idSite']);
     return $form;
   }
 
@@ -34,16 +46,18 @@ class PublishMonthSummary extends ToolbarWidgetBase {
   public function getApiCallback() {
     return 'dyniva_matomo_widget_publish_month_summary_api_callback';
   }
+
   /**
    * {@inheritDoc}
    */
   public function getApiParams() {
     return [
       'segment' => 'eventAction==content.create',
-      'period' => 'day',
+      //'period' => 'day',
       'action_segment' => 'content.create',
     ];
   }
+
   /**
    * {@inheritDoc}
    */

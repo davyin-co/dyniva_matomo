@@ -84,6 +84,7 @@ class ViewsRank extends ToolbarWidgetBase {
       'segment' => $this->configuration['segment'],
       'filter_limit' => $this->configuration['filter_limit'],
       'period' => $this->configuration['period'],
+      'filter_sort_column' => 'nb_pageviews',
     ];
     if (!empty($this->configuration['date'])) {
       $params['date'] = $this->configuration['date'];

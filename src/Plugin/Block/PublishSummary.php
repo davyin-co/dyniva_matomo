@@ -12,26 +12,7 @@ use Drupal\dyniva_matomo\Form\RangeToolbarForm;
  *  admin_label = "发文总览",
  * )
  */
-class PublishSummary extends ToolbarWidgetBase {
-
-  /**
-   * {@inheritDoc}
-   */
-  public function getToolbar() {
-    $form = \Drupal::formBuilder()->getForm(RangeToolbarForm::class);
-    $id = $this->getWidgetId();
-    if($form['date1']['#default_value'] != $form['date2']['#default_value']) {
-      $form['#attached']['drupalSettings']['dyniva_matomo']['params'][$id] = [
-        'date' => "{$form['date1']['#default_value']},{$form['date2']['#default_value']}"
-      ];
-    } else {
-      $form['#attached']['drupalSettings']['dyniva_matomo']['params'][$id] = [
-        'date' => $form['date1']['#default_value']
-      ];
-    }
-    unset($form['city']);
-    return $form;
-  }
+class PublishSummary extends MatomoWidgetBase {
 
   /**
    * {@inheritDoc}

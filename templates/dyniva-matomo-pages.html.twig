@@ -1,0 +1,199 @@
+<div class="matomo-widget" id='{{ content.id }}'>
+  <em class="no-data hidden">{{ 'There is no data for this report.'|t }}</em>
+  <table class="hidden">
+    <thead>
+    <tr>
+      <th>{% if content.method == 'Actions.getPageTitles' %} {{ 'Page title'|t }} {% else %} {{ 'Url'|t }} {% endif %}</th>
+      <th>{{ 'Pageviews'|t }}</th>
+      <th>{{ 'Unique Pageviews'|t }}</th>
+      {% if content.visit_log or content.evolution %}
+        <th>{{ 'Operations'|t }}</th>
+      {% endif %}
+    </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+    {% if content.total %}
+      <tfoot>
+      <tr>
+        <td>{{ 'Totals'|t }}</td>
+        <td class="pageviews"></td>
+        <td class="visits"></td>
+        {% if content.visit_log or content.evolution %}
+          <td></td>
+        {% endif %}
+      </tr>
+      </tfoot>
+    {% endif %}
+  </table>
+</div>
+
+
+<script type="text/template" id="pages-rows-template">
+  <tr>
+    <td>
+      <% if (url){ %>
+      <a target="_blank" href="<%= url %>"><%= label %></a>
+      <% }else{ %>
+      <%= label %>
+      <% } %>
+    </td>
+    <td>
+      <%= nb_hits %>
+    </td>
+    <td>
+      <%= nb_visits %>
+    </td>
+    {% if content.visit_log or content.evolution %}
+      <td>
+        {% if content.visit_log %}
+          <a data-method="Live.getLastVisitsDetails" data-title="<%= label %>" data-segment="<%= segment %>"
+             data-date="<%= date %>" data-idsite="<%= idSite %>" href="javascript:void(0);"
+             class="open-dialog open-visit-log-dialog open-dialog-icon"
+             data-toggle="tooltip" title="{{ 'Open segmented Visit Log'|t }}" data-trigger="hover">
+            <img src="{{ content.image_base_path }}manage/pc-phone.png">
+          </a>
+        {% endif %}
+        {% if content.evolution %}
+          <a data-method="{{ content.method }}" data-title="<%= label %>" data-segment="<%= segment %>"
+             data-date="<%= date %>" data-idsite="<%= idSite %>" href="javascript:void(0);"
+             class="open-dialog open-trend-dialog open-dialog-icon"
+             data-toggle="tooltip" title="{{ 'Open Row Evolution'|t }}" data-trigger="hover">
+            <img src="{{ content.image_base_path }}manage/line-chart.png">
+          </a>
+        {% endif %}
+      </td>
+    {% endif %}
+  </tr>
+</script>
+
+
+<script type="text/template" id="pages-visit-log-template">
+  <div class="ui-dialog ui-widget-overlay ui-widget-closed"></div>
+  <div class="ui-dialog ui-widget ui-widget-content">
+    <div class="ui-dialog-titlebar ui-widget-header">
+      <span class="ui-dialog-title">{{ 'Visit Log'|t }} "<%= title %>"</span>
+      <button type="button" class="ui-button ui-widget-closed ui-button-close">
+        <span class="ui-button-text">X</span>
+      </button>
+    </div>
+    <div class="loading">
+      <span class="balls"></span>
+      <span class="loading-text">{{ 'Loading data'|t }}</span>
+    </div>
+    <div class="clear" style="clear: both;"></div>
+    <div class="data-widget">
+      <em class="no-data">{{ 'There is no data for this report.'|t }}</em>
+    </div>
+    <div class="pager-widget" data-limit="<%= filter_limit %>" data-pager="<%= pager %>">
+      <% if(pager>0){ %>
+      <a href="javascript:void(0);" class="pager prev-page" data-title="<%= title %>" data-segment="<%= segment %>"
+         data-date="<%= date %>" data-idsite="<%= idSite %>" data-pager="<%= (pager-1) %>">{{ 'Previous page'|t }}</a>
+      <% } %>
+      <a href="javascript:void(0);" class="pager next-page" data-title="<%= title %>" data-segment="<%= segment %>"
+         data-date="<%= date %>" data-idsite="<%= idSite %>" data-pager="<%= (pager+1) %>">{{ 'Next page'|t }}</a>
+    </div>
+  </div>
+</script>
+
+<script type="text/template" id="pages-visit-detail-template">
+  <div class="visitor-card hoverable">
+    <strong class="visitor-log-datetime visitorLogTooltip">
+      <%= serverDatePrettyFirstAction %> - <%= serverTimePrettyFirstAction %>
+    </strong>
+
+    <div class="row">
+      <div class="visitor-details col-md-4">
+        <div class="icon">
+          <img src="{{ content.image_base_path }}manage/ip-addr.png">
+        </div>
+        <ul class="details">
+          <li>IP: <%= visitIp %></li>
+        </ul>
+      </div>
+      <div class="visitor-details col-md-4">
+        <div class="icon">
+          <img src="{{ content.image_base_path }}manage/visits.png">
+        </div>
+        <ul class="details">
+          <% if(visitCount=='1'){ %>
+          <li>{{ 'New Visitor'|t }}</li>
+          <% }else{ %>
+          <li>{{ 'Returning Visitor'|t }}</li>
+          <li><%= visitCount %> {{ 'visits'|t }}</li>
+          <% } %>
+        </ul>
+      </div>
+      <div class="visitor-details col-md-4">
+        <div class="icon">
+          <img src="{{ content.image_base_path }}manage/website.png">
+        </div>
+        <ul class="details">
+          <li>{{ 'Referrer'|t }}: <%= referrerTypeName %></li>
+          <% if(referrerType == 'website'){ %>
+          <li><a target="_blank" href="<%= referrerUrl %>"><%= referrerName %></a></li>
+          <% } %>
+        </ul>
+      </div>
+
+      <div class="visitor-details col-md-4">
+        <div class="icon">
+          <img src="{{ content.image_base_path }}<%= operatingSystemIcon %>">
+        </div>
+        <ul class="details">
+          <li>{{ 'Operating system'|t }}: <%= operatingSystem %></li>
+        </ul>
+      </div>
+
+      <div class="visitor-details col-md-4">
+        <div class="icon">
+          <img src="{{ content.image_base_path }}<%= browserIcon %>">
+        </div>
+        <ul class="details">
+          <li>{{ 'Browser'|t }}: <%= browser %></li>
+          <li>{{ 'Browser engine'|t }}: <%= browserFamily %></li>
+        </ul>
+      </div>
+
+      <div class="visitor-details col-md-4">
+        <div class="icon">
+          <img src="{{ content.image_base_path }}<%= deviceTypeIcon %>">
+        </div>
+        <ul class="details">
+          <li>{{ "Device type"|t }}: <%= deviceType %></li>
+          <li>{{ "Device brand"|t }}: <%= deviceBrand %></li>
+          <li>{{ "Device model"|t }}: <%= deviceModel %></li>
+          <li>{{ "Resolution"|t }}: <%= resolution %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</script>
+
+
+<script type="text/template" id="pages-trend-template">
+  <div class="ui-dialog ui-widget-overlay ui-widget-closed"></div>
+  <div class="ui-dialog ui-widget ui-widget-content">
+    <div class="ui-dialog-titlebar ui-widget-header">
+      <span class="ui-dialog-title">{{ 'Trend'|t }} "<%= title %>"</span>
+      <button type="button" class="ui-button ui-widget-closed ui-button-close">
+        <span class="ui-button-text">X</span>
+      </button>
+    </div>
+    <div class="loading">
+      <span class="balls"></span>
+      <span class="loading-text">{{ 'Loading data'|t }}</span>
+    </div>
+    <div class="clear" style="clear: both;"></div>
+    <div class="data-widget">
+      <em class="no-data hidden">{{ 'There is no data for this report.' }}</em>
+    </div>
+  </div>
+</script>
+
+<script type="text/template" id="pages-trend-chart-template">
+  <div class="matomo-widget">
+    <div class="chart-wrapper"></div>
+  </div>
+</script>

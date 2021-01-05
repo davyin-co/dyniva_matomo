@@ -63,6 +63,18 @@ function dyniva_matomo_theme() {
       'content' => []
     ],
   ];
+
+  $result['dyniva_matomo_site_page_views'] = [
+    'variables' => [
+      'content' => []
+    ],
+  ];
+
+  $result['dyniva_matomo_pages'] = [
+    'variables' => [
+      'content' => []
+    ],
+  ];
   return $result;
 }
 

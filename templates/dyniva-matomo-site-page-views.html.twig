@@ -1,0 +1,38 @@
+<div class="block-dyniva-matomo-latest-visits-summary matomo-widget" id='{{ content.id }}'>
+  <div class="sites-total">
+    {{ content.form }}
+    <span class="detail">({{ 'Total views'|t }}:
+      <strong class="pageviews">0</strong> {{ 'Page views'|t }},
+      <strong class="visits">0</strong> {{ 'Visits'|t }})</span></div>
+  <div class="block panel-tabs panel-tabs-auto">
+    <ul class="menu tab-nav tab-nav-4">
+      <li class="active">
+        <a data-toggle="tab" href="#">{{ 'Trend chart'|t }}</a>
+      </li>
+      <li class="">
+        <a data-toggle="tab" href="#">{{ 'List'|t }}</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active in">
+        <div class="chart-wrapper"></div>
+      </div>
+      <div class="tab-pane">
+        <table data-striping="1">
+          <thead>
+          <tr>
+            <th>{{ 'Date'|t }}</th>
+            <th>{{ 'Views(PV)'|t }}</th>
+            <th>{{ 'Trend'|t }}</th>
+            <th>{{ 'Visits(UV)'|t }}</th>
+            <th>{{ 'Trend'|t }}</th>
+          </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
