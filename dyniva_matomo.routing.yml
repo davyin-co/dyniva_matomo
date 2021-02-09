@@ -53,6 +53,14 @@ dyniva_matomo.admin_users_report:
   requirements:
     _permission: 'manage ccms site'
 
+dyniva_matomo.content_summary:
+  path: '/manage/analytics/content-summary'
+  defaults:
+    _controller: '\Drupal\dyniva_matomo\Controller\AdminController::contentSummary'
+    _title: 'Content summary'
+  requirements:
+    _permission: 'manage ccms site'
+
 dyniva_matomo.visits_summary:
   path: '/manage/analytics/visits-summary'
   defaults:

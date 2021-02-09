@@ -354,4 +354,30 @@ class AdminController extends ControllerBase implements ContainerInjectionInterf
     ];
   }
 
+  /**
+   * 站点发文统计：中大融合门户使用.
+   */
+  public function contentSummary(Request $request) {
+    $regions = [
+      'content' => [
+        $this->renderBlock('dyniva_matomo_analytics_filter'),
+        $this->renderBlock('dyniva_matomo_site_articles_post'),
+      ],
+    ];
+    return $this->renderLayout('layout_onecol', $regions);
+  }
+
+  /**
+   * 站点访问统计：中大融合门户使用.
+   */
+  public function visitsSummary(Request $request) {
+    $regions = [
+      'content' => [
+        $this->renderBlock('dyniva_matomo_analytics_filter'),
+        $this->renderBlock('dyniva_matomo_sites_analytics_summary'),
+      ],
+    ];
+    return $this->renderLayout('layout_onecol', $regions);
+  }
+
 }
