@@ -49,7 +49,7 @@ header.content-header .block-page-title-block {
 }
 
 /*块级边框 表格*/
-.mm-page .page-content .block > div {
+.mm-page .page-content .block>div {
   background-color: #fff;
 }
 
@@ -354,10 +354,6 @@ header.content-header .block-page-title-block {
   #block-dyniva-matomo-search-keywords {
     padding-right: 10px;
   }
-
-  #block-dyniva-matomo-search-keywords-no-results {
-    /*padding-left: 10px;*/
-  }
 }
 
 /* 汇总报告 */
@@ -390,7 +386,7 @@ header.content-header .block-page-title-block {
 
 .matomo-widget table tbody {
   display: block;
-  max-height: 360px;
+  height: 450px;
   overflow: auto;
 }
 
@@ -417,7 +413,9 @@ header.content-header .block-page-title-block {
 }
 
 /* Spinner 3Balls Scale */
-.balls, .balls:before, .balls:after {
+.balls,
+.balls:before,
+.balls:after {
   border-radius: 50%;
   background-color: #000;
   width: 18px;
@@ -434,7 +432,8 @@ header.content-header .block-page-title-block {
   animation: spScaleAlpha 1s infinite linear;
 }
 
-.balls:before, .balls:after {
+.balls:before,
+.balls:after {
   content: '';
   position: relative;
   opacity: 0.25;
@@ -458,12 +457,15 @@ header.content-header .block-page-title-block {
   0% {
     opacity: 1;
   }
+
   33% {
     opacity: 0.25;
   }
+
   66% {
     opacity: 0.25;
   }
+
   100% {
     opacity: 1;
   }
@@ -473,12 +475,15 @@ header.content-header .block-page-title-block {
   0% {
     opacity: 1;
   }
+
   33% {
     opacity: 0.25;
   }
+
   66% {
     opacity: 0.25;
   }
+
   100% {
     opacity: 1;
   }
@@ -488,9 +493,11 @@ header.content-header .block-page-title-block {
   0% {
     opacity: 0.25;
   }
+
   33% {
     opacity: 1;
   }
+
   66% {
     opacity: 0.25;
   }
@@ -500,9 +507,11 @@ header.content-header .block-page-title-block {
   0% {
     opacity: 0.25;
   }
+
   33% {
     opacity: 1;
   }
+
   66% {
     opacity: 0.25;
   }
@@ -512,9 +521,11 @@ header.content-header .block-page-title-block {
   33% {
     opacity: 0.25;
   }
+
   66% {
     opacity: 1;
   }
+
   100% {
     opacity: 0.25;
   }
@@ -524,9 +535,11 @@ header.content-header .block-page-title-block {
   33% {
     opacity: 0.25;
   }
+
   66% {
     opacity: 1;
   }
+
   100% {
     opacity: 0.25;
   }
@@ -552,7 +565,8 @@ header.content-header .block-page-title-block {
   display: inline-block;
 }
 
-.block-dyniva-matomo-pages table tr th:first-child, .block-dyniva-matomo-pages table tr td:first-child {
+.block-dyniva-matomo-pages table tr th:first-child,
+.block-dyniva-matomo-pages table tr td:first-child {
   width: 60%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -620,7 +634,7 @@ header.content-header .block-page-title-block {
   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16), 0 0px 3px 0 rgba(0, 0, 0, 0.12);
 }
 
-.row > [class*=col-] {
+.row>[class*=col-] {
   box-sizing: border-box;
 }
 
@@ -659,11 +673,14 @@ header.content-header .block-page-title-block {
   height: auto;
 }
 
-.ui-widget-content .no-data, .ui-widget-content .pager-widget, .ui-widget-content[class*=data-rows-] .loading {
+.ui-widget-content .no-data,
+.ui-widget-content .pager-widget,
+.ui-widget-content[class*=data-rows-] .loading {
   display: none;
 }
 
-.ui-widget-content.data-rows-0 .no-data, .ui-widget-content[class*=data-rows-] .pager-widget {
+.ui-widget-content.data-rows-0 .no-data,
+.ui-widget-content[class*=data-rows-] .pager-widget {
   display: block;
 }
 
@@ -673,15 +690,4 @@ header.content-header .block-page-title-block {
 
 .matomo-widget .open-dialog-icon img {
   width: 20px;
-}
-
-.block-dyniva-matomo-custom.table-wrapper {
-  padding: 0;
-  box-shadow: none;
-  border: none;
-  background: none;
-}
-
-.block-dyniva-matomo-publish-month-summary h2,.block-dyniva-matomo-publish-month-summary form{
-  display: inline-block;
 }
