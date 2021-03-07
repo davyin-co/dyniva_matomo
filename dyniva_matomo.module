@@ -75,6 +75,75 @@ function dyniva_matomo_theme() {
       'content' => []
     ],
   ];
+
+  $result['dyniva_matomo_site_search_keywords'] = [
+    'variables' => [
+      'content' => [],
+      'config' => [],
+      'full_link' => NULL,
+    ],
+  ];
+  $result['dyniva_matomo_site_search_engines'] = [
+    'variables' => [
+      'content' => [],
+      'config' => [],
+      'full_link' => NULL,
+    ],
+  ];
+  $result['dyniva_matomo_site_articles'] = [
+    'variables' => [
+      'content' => [],
+      'config' => [],
+      'full_link' => NULL,
+    ],
+  ];
+  $result['dyniva_matomo_site_category'] = [
+    'variables' => [
+      'content' => [],
+      'config' => [],
+      'full_link' => NULL,
+    ],
+  ];
+  $result['dyniva_matomo_site_404'] = [
+    'variables' => [
+      'content' => [],
+      'config' => [],
+      'full_link' => NULL,
+    ],
+  ];
+  $result['dyniva_matomo_site_articles_post'] = [
+    'variables' => [
+      'content' => [],
+    ],
+  ];
+  $result['dyniva_matomo_site_header'] = [
+    'variables' => [
+      'content' => [],
+    ],
+  ];
+  $result['dyniva_matomo_site_trend'] = [
+    'variables' => [
+      'content' => [],
+      'content_json' => NULL,
+      'full_link' => NULL,
+    ],
+  ];
+  $result['dyniva_matomo_site_summary'] = [
+    'variables' => [
+      'content_json' => NULL,
+      'full_link' => NULL,
+    ],
+  ];
+  $result['dyniva_matomo_analytics_sites'] = [
+    'variables' => [
+      'sites' => [],
+    ],
+  ];
+  $result['dyniva_matomo_sites_analytics_summary'] = [
+    'variables' => [
+      'content' => [],
+    ],
+  ];
   return $result;
 }
 
@@ -85,4 +154,80 @@ function dyniva_matomo_preprocess_html(&$variables) {
   if(strpos(\Drupal::routeMatch()->getRouteName(), 'dyniva_matomo.') === 0) {
     $variables['attributes']['class'][] = 'dyniva-matomo';
   }
+}
+
+/**
+ * Implements hook_theme_registry_alter().
+ */
+function dyniva_matomo_theme_registry_alter(&$theme_registry) {
+  $module_handler = \Drupal::service('module_handler');
+  $module_path = $module_handler->getModule('dyniva_matomo')->getPath();
+  $theme_registry['export_icon']['theme path'] = $module_path;
+  $theme_registry['export_icon']['path'] = $module_path . '/templates';
+}
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function dyniva_matomo_node_load($entities) {
+  foreach ($entities as $entity) {
+    if ($entity->getType() == 'site' && !empty($entity->matomo_site_id->value)) {
+      /** @var MatomoQueryFactoryInterface $matomoQueryFactory */
+      $matomoQueryFactory = \Drupal::service('matomo.query_factory');
+      $matomoQuery = $matomoQueryFactory->getQuery('VisitsSummary.get');
+      $matomoQuery->setParameters([
+        'idSite' => $entity->matomo_site_id->value,
+        'period' => 'day',
+        'date' => 'today',
+      ]);
+      $matomoResponse = $matomoQuery->execute()->getResponse();
+      $entity->matomo_visits_summary = $matomoResponse;
+    }
+  }
+}
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function dyniva_matomo_views_data_alter(array &$data) {
+  $data['node']['dyniva_matomo_page_visits'] = [
+    'title' => t('浏览量(PV)'),
+    'field' => [
+      'title' => t('浏览量(PV)'),
+      'help' => t('Page visits'),
+      'id' => 'dyniva_matomo_page_visits',
+    ],
+  ];
+  $data['node']['dyniva_matomo_unique_visits'] = [
+    'title' => t('访问量(UV)'),
+    'field' => [
+      'title' => t('访问量(UV)'),
+      'help' => t('Unique visits.'),
+      'id' => 'dyniva_matomo_unique_visits',
+    ],
+  ];
+  $data['node']['dyniva_matomo_unique_visitors'] = [
+    'title' => t('IP数'),
+    'field' => [
+      'title' => t('IP数'),
+      'help' => t('Unique visitors/Unique IP.'),
+      'id' => 'dyniva_matomo_unique_visitors',
+    ],
+  ];
+  $data['node']['dyniva_matomo_bounce_rate'] = [
+    'title' => t('跳出率'),
+    'field' => [
+      'title' => t('跳出率'),
+      'help' => t('Bounce rate.'),
+      'id' => 'dyniva_matomo_bounce_rate',
+    ],
+  ];
+  $data['node']['dyniva_matomo_average_time'] = [
+    'title' => t('平均访问时长'),
+    'field' => [
+      'title' => t('平均访问时长'),
+      'help' => t('Average time on site.'),
+      'id' => 'dyniva_matomo_average_time',
+    ],
+  ];
 }
