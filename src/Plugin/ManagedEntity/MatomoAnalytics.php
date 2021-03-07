@@ -20,7 +20,7 @@ class MatomoAnalytics extends ManagedEntityPluginBase{
    * @inheritdoc
    */
   public function buildPage(ManagedEntity $managedEntity, EntityInterface $entity){
-    $view = \Drupal::entityTypeManager()->getViewBuilder($entity->getEntityTypeId())->view($entity);
+    $view = \Drupal::entityTypeManager()->getViewBuilder($entity->getEntityTypeId())->view($entity, 'matomo_summary');
     return $view;
   }
   /**
