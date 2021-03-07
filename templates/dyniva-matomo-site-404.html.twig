@@ -1,0 +1,65 @@
+{{ attach_library('dyniva_matomo/wrapper') }}
+<div class="dyniva_matomo_wrapper">
+    <div class="site-category">
+        <div class="card-1">
+            {% if config.page_block == 1 %}
+                <div class="card-header">
+                    <h3>404错误页面</h3>
+                    <div class="ext">{{ full_link }}</div>
+                </div>
+                <div class="spacer"></div>
+                <table class="table-2">
+                    <thead>
+                    <tr>
+                        <th>错误路径</th>
+                        <th>浏览量(PV)</th>
+                        <th>访问量(UV)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if content is empty %}
+                        <tr>
+                            <td colspan="4">{{ "没有查询到数据。"|t }}</td>
+                        </tr>
+                    {% else %}
+                        {% for item in content %}
+                            <tr>
+                                <td title="{{ item.label_link }}">{{ item.label_link }}</td>
+                                <td>{{ item.nb_hits }}</td>
+                                <td>{{ item.nb_visits }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                    </tbody>
+                </table>
+            {% else %}
+                <table class="table-2">
+                    <thead>
+                    <tr>
+                        <th>错误路径</th>
+                        <th>来源路径</th>
+                        <th>浏览量(PV)</th>
+                        <th>访问量(UV)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if content is empty %}
+                        <tr>
+                            <td colspan="4">{{ "没有查询到数据。"|t }}</td>
+                        </tr>
+                    {% else %}
+                        {% for item in content %}
+                            <tr>
+                                <td>{{ item.label_link }}</td>
+                                <td><a href="{{ item.label_from }}">{{ item.label_from }}</a></td>
+                                <td>{{ item.nb_hits }}</td>
+                                <td>{{ item.nb_visits }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+    </div>
+</div>

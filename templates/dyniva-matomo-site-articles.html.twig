@@ -1,0 +1,75 @@
+
+{{ attach_library('dyniva_matomo/wrapper') }}
+<div class="dyniva_matomo_wrapper">
+  <div class="site-articles">
+    <div class="card-1">
+    {% if config.page_block == 1 %}
+    <div class="card-header">
+        <h3>页面访问 Top10</h3>
+        <div class="ext">{{ full_link }}</div>
+    </div>
+    <div class="spacer"></div>
+    <table class="table-2">
+        <thead>
+        <tr>
+            <th>排行</th>
+            <th>页面</th>
+            <th>浏览量(PV)</th>
+            <th>访问量(UV)</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if content is empty %}
+            <tr>
+                <td colspan="4">{{ "没有查询到数据。"|t }}</td>
+            </tr>
+        {% else %}
+            {% for item in content %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td><a href="{{ item.url }}">{{ item.url }}</a></td>
+                    <td>{{ item.nb_hits }}</td>
+                    <td>{{ item.nb_visits }}</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+{% else %}
+    <table class="table-2">
+        <thead>
+        <tr>
+            <th rowspan="2">页面</th>
+            <th colspan="2" rowspan="1">网站基础指标</th>
+            <th colspan="2" rowspan="1">流量质量指标</th>
+        </tr>
+        <tr>
+            <th>浏览量(PV)</th>
+            <th>访问量(UV)</th>
+            <th>跳出率</th>
+            <th>访问时长</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if content is empty %}
+            <tr>
+                <td colspan="5">{{ "没有查询到数据。"|t }}</td>
+            </tr>
+        {% else %}
+            {% for item in content %}
+                <tr>
+                    <td><a href="{{ item.url }}">{{ item.url }}</a></td>
+                    <td>{{ item.nb_hits }}</td>
+                    <td>{{ item.nb_visits }}</td>
+                    <td>{{ item.bounce_rate }}</td>
+                    <td>{{ item.avg_time_on_page|visits_time_transform }}</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+{% endif %}
+    </div>
+  </div>
+</div>
+
