@@ -21,6 +21,14 @@ dyniva_matomo.admin_sites:
   requirements:
     _permission: 'manage ccms site'
 
+dyniva_matomo.admin_sites_list:
+  path: '/manage/analytics/sites-list'
+  defaults:
+    _controller: '\Drupal\dyniva_matomo\Controller\AdminController::sitesList'
+    _title: 'Sites list'
+  requirements:
+    _permission: 'manage ccms site'
+
 dyniva_matomo.admin_visits:
   path: '/manage/analytics/visits'
   defaults:

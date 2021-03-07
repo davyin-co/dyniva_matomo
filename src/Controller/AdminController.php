@@ -126,6 +126,16 @@ class AdminController extends ControllerBase implements ContainerInjectionInterf
     return $this->renderLayout('layout_onecol', $regions);
   }
 
+  public function sitesList(Request $request) {
+    $regions = [
+      'content' => [
+        $this->renderBlock('dyniva_matomo_sites_filter'),
+        $this->renderBlock('dyniva_matomo_analytics_sites'),
+      ],
+    ];
+    return $this->renderLayout('layout_onecol', $regions);
+  }
+
   public function visits(Request $request) {
     $tags = $this->renderBlock('dyniva_matomo_custom', [
         'label' => '热门标签',
