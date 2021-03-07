@@ -53,6 +53,14 @@ dyniva_matomo.admin_content_publish:
   requirements:
     _permission: 'manage ccms site'
 
+dyniva_matomo.admin_site_articles_post:
+  path: '/manage/analytics/site-articles-post'
+  defaults:
+    _controller: '\Drupal\dyniva_matomo\Controller\AdminController::siteArticlesPost'
+    _title: 'Content publish'
+  requirements:
+    _permission: 'manage ccms site'
+
 dyniva_matomo.admin_users_report:
   path: '/manage/analytics/users_report'
   defaults:
