@@ -55,11 +55,11 @@ class SitesToolbarForm extends FormBase {
       'type' => $values['type'],
       'keyword' => $values['keyword'],
     ];
-    $form_state->setRedirectUrl(Url::fromRoute('dyniva_matomo.admin_sites', $query));
+    $form_state->setRedirectUrl(Url::fromRoute('dyniva_matomo.admin_sites_list', $query));
   }
 
   public function resetForm(array &$form, FormStateInterface $form_state) {
-    $form_state->setRedirect('dyniva_matomo.admin_sites');
+    $form_state->setRedirect('dyniva_matomo.admin_sites_list');
   }
 
 }
