@@ -247,6 +247,40 @@
     });
   }
 
+  function formatSeconds(value) {
+    var theTime = parseInt(value);
+    var theTime1 = 0;
+    var theTime2 = 0;
+    if (theTime > 60) {
+      theTime1 = parseInt(theTime / 60);
+      theTime = parseInt(theTime % 60);
+      if (theTime1 > 60) {
+        theTime2 = parseInt(theTime1 / 60);
+        theTime1 = parseInt(theTime1 % 60);
+      }
+    }
+
+    var result = "" + parseInt(theTime);
+    if (10 > theTime > 0) {
+      result = "0" + parseInt(theTime);
+    } else {
+      result = "" + parseInt(theTime);
+    }
+
+    if (10 > theTime1 > 0) {
+      result = "0" + parseInt(theTime1) + ":" + result;
+    } else {
+      result = "" + parseInt(theTime1) + ":" + result;
+    }
+    if (theTime2 > 0) {
+      result = "" + parseInt(theTime2) + ":" + result;
+    }
+    else {
+      result = "00" + ":" + result;
+    }
+    return result;
+  }
+
   Drupal.behaviors.dyniva_matomo_toolbar = {
     widgetRun: function (id, form_id, context) {
       if (id && drupalSettings.dyniva_matomo.widgets[id]) {
@@ -418,8 +452,8 @@
           },
           yAxis: {},
           series: [{
-              type: 'line'
-            },
+            type: 'line'
+          },
             {
               type: 'line'
             }
@@ -472,8 +506,8 @@
           },
           yAxis: {},
           series: [{
-              type: 'line'
-            },
+            type: 'line'
+          },
             {
               type: 'line'
             }
@@ -534,9 +568,9 @@
             minInterval: 1
           },
           series: [{
-              type: 'line',
-              smooth: true,
-            },
+            type: 'line',
+            smooth: true,
+          },
             {
               type: 'line',
               smooth: true,
@@ -690,6 +724,42 @@
         table += '</tbody></table>';
         widget.html(table);
       },
+      dyniva_matomo_site_keywords_api_callback: function (id, data, context, settings) {
+        var widget = $('#' + id, context);
+        var table = '<table>';
+        table += '<thead><tr><th>排名</th><th>搜索关键词</th><th>搜索数</th></tr></thead>';
+        table += '<tbody>';
+        data.forEach(function (item, index) {
+          table += '<tr><td>' + (index+1) + '</td><td></td>' + item.label + '<td>' + item.nb_actions + '</td></tr>';
+        });
+        table += '</tbody>';
+        table += '</table>';
+        widget.html(table);
+      },
+      dyniva_matomo_site_referrers_api_callback: function (id, data, context, settings) {
+        var widget = $('#' + id, context);
+        var table = '<table>';
+        table += '<thead><tr><th>排名</th><th>来源</th><th>浏览量(PV)</th></tr></thead>';
+        table += '<tbody>';
+        data.forEach(function (item, index) {
+          table += '<tr><td>' + (index+1) + '</td><td></td>' + item.label + '<td>' + item.nb_actions + '</td></tr>';
+        });
+        table += '</tbody>';
+        table += '</table>';
+        widget.html(table);
+      },
+      dyniva_matomo_page_visits_api_callback: function (id, data, context, settings) {
+        var widget = $('#' + id, context);
+        var table = '<table>';
+        table += '<thead><tr><th>排名</th><th>标题</th><th>浏览量(PV)</th></tr></thead>';
+        table += '<tbody>';
+        data.forEach(function (item, index) {
+          table += '<tr><td>' + (index+1) + '</td><td>' + item.label + '</td><td>' + item.nb_hits + '</td></tr>';
+        });
+        table += '</tbody>';
+        table += '</table>';
+        widget.html(table);
+      },
       dyniva_matomo_entry_pages_api_callback: function (id, data, context, settings) {
         var widget = $('#' + id, context);
         var table = '<table>';
@@ -714,7 +784,7 @@
       },
       dyniva_matomo_events_list_api_callback: function (id, data, context, settings) {
         var rows = [],
-          groups = {};
+            groups = {};
         if (settings.params.date.indexOf(',') != -1) {
           rows = takeoutTopLevel(data);
         } else {
@@ -763,15 +833,20 @@
         $('[data-action]').each(function () {
           var s = $(this).data('action').split(':');
           if (s && _.has(data, s[0]) && $(this).data('action') == (s[0] + ':' + settings.params.id)) {
-            $(this).text(data[s[0]]);
+            if (s[0] == 'avg_time_on_site') {
+              $(this).text(formatSeconds(data[s[0]]));
+            }
+            else {
+              $(this).text(data[s[0]]);
+            }
           }
         });
       },
       // 市县访问量排行榜Top8
       dyniva_matomo_city_report_api_callback: function (id, data, context, settings) {
         var rows = [],
-          names = [],
-          counts = [];
+            names = [],
+            counts = [];
 
         _.each(data, function (item) {
           names.push(item.label);
@@ -828,9 +903,9 @@
           chart = echarts.init($('.chart-wrapper', widget).get(0), 'dy-chart');
         }
         var dimensions = ['label'],
-          categories = [],
-          series = [],
-          report = [];
+            categories = [],
+            series = [],
+            report = [];
         _.each(data, function (item, date) {
           var row = {
             label: date
@@ -838,8 +913,8 @@
           _.each(item, function (category) {
             row[category.label] = category.nb_events;
             if (_.where(categories, {
-                name: category.label
-              }).length == 0) {
+              name: category.label
+            }).length == 0) {
               series.push({
                 type: 'bar',
                 barMaxWidth: 30,
@@ -1012,7 +1087,7 @@
       },
       dyniva_matomo_users_summary_api_callback: function (id, data, context, settings) {
         var total = 0,
-          roles = {};
+            roles = {};
         _.each(data, function (day) {
           _.each(day, function (event) {
             total += event.nb_events;
@@ -1067,8 +1142,8 @@
 
         var rows = [];
         var dimensions = ['label'],
-          series = [],
-          report = [];
+            series = [],
+            report = [];
         _.each(data, function (date, site) {
           _.each(date, function (day) {
             _.each(day, function (event) {
@@ -1238,10 +1313,10 @@
             type: 'line',
             // smooth: true,
           },
-          {
-            type: 'line',
-            // smooth: true,
-          }
+            {
+              type: 'line',
+              // smooth: true,
+            }
           ],
           dataZoom: [{
             "xAxisIndex": [0],

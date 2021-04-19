@@ -1,0 +1,5 @@
+services:
+  dyniva_matomo.visits_time_extension:
+    class: Drupal\dyniva_matomo\TwigExtension\VisitsTimeExtension
+    tags:
+      - { name: twig.extension }

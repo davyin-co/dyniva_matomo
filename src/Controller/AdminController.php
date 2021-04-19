@@ -126,6 +126,16 @@ class AdminController extends ControllerBase implements ContainerInjectionInterf
     return $this->renderLayout('layout_onecol', $regions);
   }
 
+  public function sitesList(Request $request) {
+    $regions = [
+      'content' => [
+        $this->renderBlock('dyniva_matomo_sites_filter'),
+        $this->renderBlock('dyniva_matomo_analytics_sites'),
+      ],
+    ];
+    return $this->renderLayout('layout_onecol', $regions);
+  }
+
   public function visits(Request $request) {
     $tags = $this->renderBlock('dyniva_matomo_custom', [
         'label' => '热门标签',
@@ -267,6 +277,16 @@ class AdminController extends ControllerBase implements ContainerInjectionInterf
     return $this->renderLayout('layout_twocol', $regions);
   }
 
+  public function siteArticlesPost(Request $request) {
+    $regions = [
+      'content' => [
+        $this->renderBlock('dyniva_matomo_analytics_filter'),
+        $this->renderBlock('dyniva_matomo_site_articles_post'),
+      ],
+    ];
+    return $this->renderLayout('layout_onecol', $regions);
+  }
+
   public function usersReport(Request $request) {
     $regions = [
       'content' => [
@@ -352,6 +372,32 @@ class AdminController extends ControllerBase implements ContainerInjectionInterf
       ],
       '#label' => $label,
     ];
+  }
+
+  /**
+   * 站点发文统计：中大融合门户使用.
+   */
+  public function contentSummary(Request $request) {
+    $regions = [
+      'content' => [
+        $this->renderBlock('dyniva_matomo_analytics_filter'),
+        $this->renderBlock('dyniva_matomo_site_articles_post'),
+      ],
+    ];
+    return $this->renderLayout('layout_onecol', $regions);
+  }
+
+  /**
+   * 站点访问统计：中大融合门户使用.
+   */
+  public function visitsSummary(Request $request) {
+    $regions = [
+      'content' => [
+        $this->renderBlock('dyniva_matomo_analytics_filter'),
+        $this->renderBlock('dyniva_matomo_sites_analytics_summary'),
+      ],
+    ];
+    return $this->renderLayout('layout_onecol', $regions);
   }
 
 }

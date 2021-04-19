@@ -1,0 +1,24 @@
+<table>
+    <thead>
+    <tr>
+        <th rowspan="2">编号</th>
+        <th rowspan="2">院校/站点</th>
+        <th rowspan="2">发文量</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if content is empty %}
+        <tr>
+            <td colspan="7">{{ "没有查询到数据。"|t }}</td>
+        </tr>
+    {% else %}
+        {% for site in content %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ site.label }}</td>
+                <td>{{ site.count }}</td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    </tbody>
+</table>

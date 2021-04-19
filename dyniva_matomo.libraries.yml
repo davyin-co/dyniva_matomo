@@ -8,3 +8,16 @@ toolbar:
     - core/drupal
     - core/drupalSettings
     - core/underscore
+
+wrapper:
+  css:
+    theme:
+      css/wrapper.css: {}
+
+trend:
+  js:
+    js/trend.js: {}
+
+summary:
+  js:
+    js/summary.js: {}

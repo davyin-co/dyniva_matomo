@@ -1,0 +1,13 @@
+{{ attach_library('dyniva_ui/echart') }}
+{{ attach_library('dyniva_matomo/wrapper') }}
+{{ attach_library('dyniva_matomo/summary') }}
+
+<div class="dyniva_matomo_wrapper">
+  <div class="spacer"></div>
+  <div class="card-2">
+    <div class="site-summary">
+      <div id="summary-echart-1" class="echart" data-init="{{ content_json }}"></div>
+      <div class="full-link">{{ full_link }}</div>
+    </div>
+  </div>
+</div>

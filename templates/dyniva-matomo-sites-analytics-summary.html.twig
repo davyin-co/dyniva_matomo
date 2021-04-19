@@ -1,0 +1,32 @@
+<table>
+    <thead>
+    <tr>
+        <th rowspan="2">院校站点</th>
+        <th colspan="2" rowspan="1">网站基础指标</th>
+        <th colspan="2" rowspan="1">流量质量指标</th>
+    </tr>
+    <tr>
+        <th>浏览量(PV)</th>
+        <th>访问量(UV)</th>
+        <th>跳出次数</th>
+        <th>访问时长</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if content is empty %}
+        <tr>
+            <td colspan="6">{{ "没有查询到数据。"|t }}</td>
+        </tr>
+    {% else %}
+        {% for item in content %}
+            <tr>
+                <td>{{ item.label }}</td>
+                <td>{{ item.stats.nb_actions }}</td>
+                <td>{{ item.stats.nb_visits }}</td>
+                <td>{{ item.stats.bounce_count }}</td>
+                <td>{{ item.stats.sum_visit_length|visits_time_transform }}</td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    </tbody>
+</table>

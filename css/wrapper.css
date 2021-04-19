@@ -1,0 +1,476 @@
+.dyniva_matomo_wrapper {
+    font-family: PingFangSC-Light, PingFang SC, "Microsoft YaHei", "微软雅黑", Helvetica, Tahoma, Arial, STXihei, sans-serif;
+    background-color: inherit !important;
+}
+.dyniva_matomo_wrapper .a-title {
+    color: inherit;
+}
+.dyniva_matomo_wrapper .spacer-min {
+    height: 10px;
+}
+@media screen and (max-width: 767px) {
+    .dyniva_matomo_wrapper .spacer-min {
+        height: 5px;
+    }
+}
+.dyniva_matomo_wrapper .spacer {
+    height: 20px;
+}
+@media screen and (max-width: 767px) {
+    .dyniva_matomo_wrapper .spacer {
+        height: 10px;
+    }
+}
+.dyniva_matomo_wrapper .spacer-2x {
+    height: 40px;
+}
+@media screen and (max-width: 767px) {
+    .dyniva_matomo_wrapper .spacer-xs {
+        height: 20px;
+    }
+}
+.dyniva_matomo_wrapper .t-l {
+    text-align: left;
+}
+.dyniva_matomo_wrapper .t-c {
+    text-align: center;
+}
+.dyniva_matomo_wrapper .t-r {
+    text-align: right;
+}
+.dyniva_matomo_wrapper .v-m {
+    vertical-align: middle;
+}
+.dyniva_matomo_wrapper .text-muted {
+    color: rgba(0, 0, 0, 0.45);
+}
+.dyniva_matomo_wrapper .divider {
+    width: 100%;
+    border-bottom: 1px solid #eeeeee;
+}
+.dyniva_matomo_wrapper .right-button {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #dddddd;
+    color: #dddddd;
+    text-shadow: #dddddd 1px 0 0;
+    text-align: center;
+    line-height: 18px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.dyniva_matomo_wrapper .empty {
+    padding: 10px;
+    color: rgba(0, 0, 0, 0.45);
+    text-align: center;
+}
+.dyniva_matomo_wrapper .header {
+    position: relative;
+}
+.dyniva_matomo_wrapper .header .ext {
+    position: absolute;
+    top: 10px;
+    right: 0px;
+    text-align: center;
+}
+.dyniva_matomo_wrapper .header .ext .count {
+    font-size: 14px;
+    font-weight: 400;
+    color: #2879b5;
+}
+.dyniva_matomo_wrapper h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 400;
+    color: #000000;
+    font-family: PingFangSC-Regular, PingFang SC;
+}
+.dyniva_matomo_wrapper .day {
+    font-size: 16px;
+    font-weight: 400;
+    color: #595959;
+}
+.dyniva_matomo_wrapper h2,
+.dyniva_matomo_wrapper h3 {
+    margin: 0;
+    height: 28px;
+    line-height: 28px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #323c47;
+    font-family: PingFangSC-Medium, PingFang SC, "Microsoft YaHei", "微软雅黑", Helvetica, Tahoma, Arial, STXihei, sans-serif;
+}
+.dyniva_matomo_wrapper h2:after,
+.dyniva_matomo_wrapper h3:after {
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+}
+.dyniva_matomo_wrapper h2 .subtitle,
+.dyniva_matomo_wrapper h3 .subtitle {
+    margin-left: 10px;
+    font-size: 12px;
+    color: #7c7c7c;
+}
+.dyniva_matomo_wrapper h2 .ext,
+.dyniva_matomo_wrapper h3 .ext {
+    float: right;
+}
+.dyniva_matomo_wrapper h2 .more,
+.dyniva_matomo_wrapper h3 .more {
+    margin-left: 10px;
+    font-size: 12px;
+    color: #0c669e;
+}
+.dyniva_matomo_wrapper h2 .download,
+.dyniva_matomo_wrapper h3 .download {
+    font-size: 12px;
+    color: #8d8d8d;
+}
+.dyniva_matomo_wrapper h3 {
+    font-size: 14px;
+}
+.dyniva_matomo_wrapper select {
+    border-radius: 3px;
+    border: 1px solid #e6e6e6;
+}
+.dyniva_matomo_wrapper input {
+    padding: 6px 8px;
+    border-radius: 3px;
+    border: 1px solid #e6e6e6;
+}
+.dyniva_matomo_wrapper .card-1 {
+    padding: 20px;
+    box-shadow: 0px 2px 5px 0px #f2f2f2;
+    border-radius: 6px;
+    border: 1px solid #eeeeee;
+    background-color: #ffffff;
+}
+.dyniva_matomo_wrapper .card-1 .card-header,
+.dyniva_matomo_wrapper .card-1 .item {
+    display: table;
+    width: 100%;
+}
+.dyniva_matomo_wrapper .card-1 h3,
+.dyniva_matomo_wrapper .card-1 .ext,
+.dyniva_matomo_wrapper .card-1 .item-label,
+.dyniva_matomo_wrapper .card-1 .value {
+    display: table-cell;
+    vertical-align: middle;
+}
+.dyniva_matomo_wrapper .card-1 h3 {
+    font-size: 24px;
+    font-weight: 500;
+    color: #323c47;
+    line-height: 22px;
+    text-shadow: 0px 2px 5px #f2f2f2;
+    font-family: PingFangSC-Medium, PingFang SC, "Microsoft YaHei", "微软雅黑", Helvetica, Tahoma, Arial, STXihei, sans-serif;
+}
+.dyniva_matomo_wrapper .card-1 .ext {
+    text-align: right;
+    font-size: 16px;
+    color: #0365a1;
+    line-height: 22px;
+    text-shadow: 0px 2px 5px #f2f2f2;
+}
+.dyniva_matomo_wrapper .card-1 .item-label {
+    font-size: 14px;
+    font-weight: 400;
+    color: #505050;
+    line-height: 20px;
+    text-shadow: 0px 2px 5px #f2f2f2;
+}
+.dyniva_matomo_wrapper .card-1 .value {
+    text-align: right;
+}
+.dyniva_matomo_wrapper .card-2 {
+    padding: 20px;
+    box-shadow: 0px 2px 5px 0px #f2f2f2;
+    border-radius: 6px;
+    border: 1px solid #eeeeee;
+    background-color: #ffffff;
+}
+.dyniva_matomo_wrapper .card-3 {
+    border-radius: 2px;
+    border: 1px solid #EFEFEF;
+    background-color: #ffffff;
+}
+.dyniva_matomo_wrapper .card-3 .card-header {
+    height: 50px;
+    border-bottom: 1px solid #EFEFEF;
+}
+.dyniva_matomo_wrapper .card-3 .card-header:after {
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+}
+.dyniva_matomo_wrapper .card-3 .card-header input[type=checkbox] {
+    vertical-align: middle;
+    margin-left: 10px;
+    transform: translateY(-1px);
+}
+.dyniva_matomo_wrapper .card-3 .card-header label {
+    display: inline;
+    margin-left: 5px;
+}
+.dyniva_matomo_wrapper .card-3 .card-header-item {
+    float: left;
+    height: 50px;
+    line-height: 50px;
+    font-size: 14px;
+}
+.dyniva_matomo_wrapper .card-3 .card-header-item.right {
+    float: right;
+    margin-right: 10px;
+}
+.dyniva_matomo_wrapper .card-3 .card-header-item.right:last-child {
+    margin-right: 20px;
+}
+.dyniva_matomo_wrapper .card-3 .card-tabs {
+    float: left;
+    height: 50px;
+    line-height: 50px;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    margin-left: 10px;
+    font-size: 16px;
+}
+.dyniva_matomo_wrapper .card-3 .card-tabs.right {
+    float: right;
+    margin-right: 10px;
+}
+.dyniva_matomo_wrapper .card-3 .card-tabs.right:last-child {
+    margin-right: 20px;
+}
+.dyniva_matomo_wrapper .card-3 .card-tabs:after {
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+}
+.dyniva_matomo_wrapper .card-3 .card-tabs > li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.dyniva_matomo_wrapper .card-3 .card-tabs > li {
+    float: left;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 10px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.dyniva_matomo_wrapper .card-3 .card-tabs > li.active {
+    color: #1890FF;
+    border-bottom: 2px solid #1890FF;
+}
+.dyniva_matomo_wrapper .border {
+    border: 1px solid #F2F2F2;
+}
+.dyniva_matomo_wrapper .echart {
+    height: 400px;
+}
+.dyniva_matomo_wrapper .table-1 {
+    margin: 0;
+    color: #655e5e;
+}
+.dyniva_matomo_wrapper .table-1.light {
+    color: #505050;
+}
+.dyniva_matomo_wrapper .table-1 p {
+    margin: 0;
+}
+.dyniva_matomo_wrapper .table-1 thead {
+    background: #f2eff2;
+}
+.dyniva_matomo_wrapper .table-1 tr,
+.dyniva_matomo_wrapper .table-1 th {
+    border: none;
+}
+.dyniva_matomo_wrapper .table-1 th,
+.dyniva_matomo_wrapper .table-1 td {
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.dyniva_matomo_wrapper .table-1 th {
+    font-size: 16px;
+    font-weight: 500;
+    font-family: PingFangSC-Medium, PingFang SC, "Microsoft YaHei", "微软雅黑", Helvetica, Tahoma, Arial, STXihei, sans-serif;
+}
+.dyniva_matomo_wrapper .table-1 tr:nth-child(even) {
+    background: #fbfbfb;
+}
+.dyniva_matomo_wrapper .table-1.odd tr:nth-child(odd) {
+    background: #fbfbfb;
+}
+.dyniva_matomo_wrapper .table-1.odd tr:nth-child(even) {
+    background: transparent;
+}
+.dyniva_matomo_wrapper .table-2 {
+    margin: 0;
+    border: none !important;
+    box-shadow: none !important;
+}
+.dyniva_matomo_wrapper .table-2 thead {
+    background: #f3eff2;
+}
+.dyniva_matomo_wrapper .table-2 tr,
+.dyniva_matomo_wrapper .table-2 th,
+.dyniva_matomo_wrapper .table-2 td {
+    text-align: center;
+    border: 1px solid #e8e3e3;
+    background: inherit !important;
+}
+.dyniva_matomo_wrapper .table-2 th,
+.dyniva_matomo_wrapper .table-2 td {
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.dyniva_matomo_wrapper .table-2 th {
+    font-weight: 500;
+    font-family: PingFangSC-Medium, PingFang SC, "Microsoft YaHei", "微软雅黑", Helvetica, Tahoma, Arial, STXihei, sans-serif;
+}
+.dyniva_matomo_wrapper .table-3 {
+    margin: 0;
+    table-layout: fixed;
+}
+.dyniva_matomo_wrapper .table-3 thead {
+    background: transparent;
+}
+.dyniva_matomo_wrapper .table-3 tr,
+.dyniva_matomo_wrapper .table-3 th,
+.dyniva_matomo_wrapper .table-3 td {
+    width: 1%;
+    background: transparent;
+    text-align: right;
+    border: none;
+}
+.dyniva_matomo_wrapper .table-3 th,
+.dyniva_matomo_wrapper .table-3 td {
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.dyniva_matomo_wrapper .table-3 th {
+    font-weight: normal;
+    color: #666666;
+}
+.dyniva_matomo_wrapper .table-3 td {
+    border-right: 1px solid #EFEFEF;
+}
+.dyniva_matomo_wrapper .table-3 td:first-child {
+    text-align: center;
+}
+.dyniva_matomo_wrapper .table-3 td:last-child {
+    border: none;
+}
+.dyniva_matomo_wrapper .stat-1 {
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+}
+.dyniva_matomo_wrapper .stat-1 .stat-item {
+    display: table-cell;
+    width: 1%;
+}
+.dyniva_matomo_wrapper .stat-1 .stat-item + .stat-item {
+    padding-left: 10px;
+    border-left: 1px solid #EFEFEF;
+}
+.dyniva_matomo_wrapper .stat-1 .content {
+    font-size: 24px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.85);
+}
+.dyniva_matomo_wrapper .tab-1 {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+.dyniva_matomo_wrapper .tab-1 > li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.dyniva_matomo_wrapper .tab-1:after {
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+}
+.dyniva_matomo_wrapper .tab-1 li {
+    float: left;
+    padding: 1px 8px;
+    border: 1px solid #f2f2f2;
+    text-align: center;
+    min-width: 60px;
+    cursor: pointer;
+}
+.dyniva_matomo_wrapper .tab-1 li.active {
+    color: #ffffff;
+    background: #1890ff;
+}
+.dyniva_matomo_wrapper #echart-pie-1,
+.dyniva_matomo_wrapper #echart-line-1,
+.dyniva_matomo_wrapper #echart-bar-1 {
+    width: 100%;
+    height: 300px;
+}
+.dyniva_matomo_wrapper .site-search-keywords {
+    margin-top: 20px;
+    margin-right: 10px;
+}
+.dyniva_matomo_wrapper .site-search-keywords .card-1 {
+    min-height: 400px;
+}
+.dyniva_matomo_wrapper .site-search-engines {
+    margin-top: 20px;
+    margin-left: 10px;
+}
+.dyniva_matomo_wrapper .site-search-engines .card-1 {
+    min-height: 400px;
+}
+.dyniva_matomo_wrapper .site-articles {
+    margin-top: 20px;
+    margin-right: 10px;
+}
+.dyniva_matomo_wrapper .site-articles .card-1 {
+    min-height: 400px;
+}
+.dyniva_matomo_wrapper .site-category {
+    margin-top: 20px;
+    margin-left: 10px;
+}
+.dyniva_matomo_wrapper .site-category .card-1 {
+    min-height: 400px;
+}
+.dyniva_matomo_wrapper .site-summary {
+    position: relative;
+}
+.dyniva_matomo_wrapper .site-summary .full-link {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+}
+#dyniva-matomo-analytics-filter-form {
+    margin-bottom: 20px;
+}
+#dyniva-matomo-analytics-filter-form .form-wrapper .details-wrapper {
+    line-height: 0px;
+}
+#dyniva-matomo-analytics-filter-form .form-wrapper .details-wrapper .form-item {
+    display: inline-block;
+    margin-right: 10px;
+}

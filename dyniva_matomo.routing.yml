@@ -9,7 +9,7 @@ dyniva_matomo.admin_real_time:
   path: '/manage/analytics/real_time'
   defaults:
     _controller: '\Drupal\dyniva_matomo\Controller\AdminController::realTime'
-    _title: '实时访客'
+    _title: 'Realtime visitors'
   requirements:
     _permission: 'manage ccms site'
 
@@ -17,7 +17,15 @@ dyniva_matomo.admin_sites:
   path: '/manage/analytics/sites'
   defaults:
     _controller: '\Drupal\dyniva_matomo\Controller\AdminController::sites'
-    _title: '站点目录'
+    _title: 'Sites list'
+  requirements:
+    _permission: 'manage ccms site'
+
+dyniva_matomo.admin_sites_list:
+  path: '/manage/analytics/sites-list'
+  defaults:
+    _controller: '\Drupal\dyniva_matomo\Controller\AdminController::sitesList'
+    _title: 'Sites list'
   requirements:
     _permission: 'manage ccms site'
 
@@ -25,7 +33,7 @@ dyniva_matomo.admin_visits:
   path: '/manage/analytics/visits'
   defaults:
     _controller: '\Drupal\dyniva_matomo\Controller\AdminController::visits'
-    _title: '受访页面'
+    _title: 'Page visits'
   requirements:
     _permission: 'manage ccms site'
 
@@ -33,7 +41,7 @@ dyniva_matomo.admin_rank:
   path: '/manage/analytics/rank'
   defaults:
     _controller: '\Drupal\dyniva_matomo\Controller\AdminController::rank'
-    _title: '访问量排行'
+    _title: 'Analytics rank'
   requirements:
     _permission: 'manage ccms site'
 
@@ -41,7 +49,15 @@ dyniva_matomo.admin_content_publish:
   path: '/manage/analytics/content_publish'
   defaults:
     _controller: '\Drupal\dyniva_matomo\Controller\AdminController::contentPublish'
-    _title: '发文总览'
+    _title: 'Content publish'
+  requirements:
+    _permission: 'manage ccms site'
+
+dyniva_matomo.admin_site_articles_post:
+  path: '/manage/analytics/site-articles-post'
+  defaults:
+    _controller: '\Drupal\dyniva_matomo\Controller\AdminController::siteArticlesPost'
+    _title: 'Content publish'
   requirements:
     _permission: 'manage ccms site'
 
@@ -49,6 +65,22 @@ dyniva_matomo.admin_users_report:
   path: '/manage/analytics/users_report'
   defaults:
     _controller: '\Drupal\dyniva_matomo\Controller\AdminController::usersReport'
-    _title: '汇总报告'
+    _title: 'Users report'
+  requirements:
+    _permission: 'manage ccms site'
+
+dyniva_matomo.content_summary:
+  path: '/manage/analytics/content-summary'
+  defaults:
+    _controller: '\Drupal\dyniva_matomo\Controller\AdminController::contentSummary'
+    _title: 'Content summary'
+  requirements:
+    _permission: 'manage ccms site'
+
+dyniva_matomo.visits_summary:
+  path: '/manage/analytics/visits-summary'
+  defaults:
+    _controller: '\Drupal\dyniva_matomo\Controller\AdminController::visitsSummary'
+    _title: 'Analytics summary'
   requirements:
     _permission: 'manage ccms site'

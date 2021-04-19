@@ -1,0 +1,53 @@
+<table>
+    <thead>
+    <tr>
+        <th>网站名称</th>
+        <th></th>
+        <th>浏览量(PV)</th>
+        <th>访客数(UV)</th>
+        <th>IP数</th>
+        <th>跳出率</th>
+        <th>平均访问时长</th>
+        <th>详情</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if sites is not empty %}
+        {% for site in sites %}
+            <tr>
+                <td>
+                    <p>{{ site.label }}</p>
+                    <p>{{ site.domain }}</p>
+                </td>
+                <td>
+                    <p>今日</p>
+                    <p>昨日</p>
+                </td>
+                <td>
+                    <p>{{ site.today.nb_actions }}</p>
+                    <p>{{ site.yesterday.nb_actions }}</p>
+                </td>
+                <td>
+                    <p>{{ site.today.nb_visits }}</p>
+                    <p>{{ site.yesterday.nb_visits }}</p>
+                </td>
+                <td>
+                    <p>{{ site.today.nb_uniq_visitors }}</p>
+                    <p>{{ site.yesterday.nb_uniq_visitors }}</p>
+                </td>
+                <td>
+                    <p>{{ site.today.bounce_rate }}</p>
+                    <p>{{ site.yesterday.bounce_rate }}</p>
+                </td>
+                <td>
+                    <p>{{ site.today.avg_time_on_site|visits_time_transform }}</p>
+                    <p>{{ site.yesterday.avg_time_on_site|visits_time_transform }}</p>
+                </td>
+                <td>
+                    <p>{{ site.summary }}</p>
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    </tbody>
+</table>
